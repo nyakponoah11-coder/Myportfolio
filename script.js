@@ -101,3 +101,44 @@ document.querySelectorAll('.magnetic').forEach(btn => {
     btn.style.transform = '';
   });
 });
+
+// Projects carousel: arrow buttons + click-and-drag swipe
+const scroller = document.getElementById('projectsScroll');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+if (scroller) {
+  const scrollByCard = (dir) => {
+    const card = scroller.querySelector('.project-card');
+    const gap = 24;
+    const distance = card ? card.offsetWidth + gap : 320;
+    scroller.scrollBy({ left: dir * distance, behavior: 'smooth' });
+  };
+
+  prevBtn?.addEventListener('click', () => scrollByCard(-1));
+  nextBtn?.addEventListener('click', () => scrollByCard(1));
+
+  // Click-and-drag swipe for mouse/trackpad users
+  let isDown = false;
+  let startX = 0;
+  let scrollStart = 0;
+
+  scroller.addEventListener('mousedown', (e) => {
+    isDown = true;
+    scroller.classList.add('dragging');
+    startX = e.pageX;
+    scrollStart = scroller.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDown = false;
+    scroller.classList.remove('dragging');
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const delta = e.pageX - startX;
+    scroller.scrollLeft = scrollStart - delta;
+  });
+}

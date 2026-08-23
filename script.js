@@ -17,15 +17,22 @@ navLinks.querySelectorAll('a').forEach(link => {
   });
 });
 
-// Sticky nav shadow on scroll
+// Sticky nav shadow + scroll progress bar
 const nav = document.getElementById('nav');
+const progressBar = document.getElementById('progressBar');
+
 window.addEventListener('scroll', () => {
   if (window.scrollY > 10) {
-    nav.style.boxShadow = '0 1px 0 rgba(11,31,51,0.06)';
+    nav.style.borderBottomColor = 'rgba(255,90,54,0.25)';
   } else {
-    nav.style.boxShadow = 'none';
+    nav.style.borderBottomColor = '';
   }
-});
+
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = pct + '%';
+}, { passive: true });
 
 // Contact form -> mailto (static hosting has no backend)
 const form = document.getElementById('contactForm');
@@ -46,16 +53,51 @@ form.addEventListener('submit', (e) => {
 
 // Reveal sections as they enter viewport
 const revealTargets = document.querySelectorAll('.section');
-const observer = new IntersectionObserver((entries) => {
+const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.style.animationPlayState = 'running';
-      observer.unobserve(entry.target);
+      entry.target.classList.add('in-view');
+      sectionObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.12 });
 
-revealTargets.forEach(el => {
-  el.style.animationPlayState = 'paused';
-  observer.observe(el);
+revealTargets.forEach(el => sectionObserver.observe(el));
+
+// Animate the timeline line + items as they scroll into view
+const timeline = document.querySelector('.timeline');
+if (timeline) {
+  const timelineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        timeline.classList.add('in-view');
+        timelineObserver.unobserve(timeline);
+      }
+    });
+  }, { threshold: 0.15 });
+  timelineObserver.observe(timeline);
+
+  const items = document.querySelectorAll('.timeline__item');
+  const itemObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        itemObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  items.forEach(item => itemObserver.observe(item));
+}
+
+// Magnetic button effect
+document.querySelectorAll('.magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.3}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
 });

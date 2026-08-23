@@ -200,33 +200,54 @@
     <div class="section__head">
       <span class="section__label">04 — Projects</span>
       <h2>Selected work.</h2>
-      <p class="section__note">This portfolio site is the first entry — more projects are on the way. Swap these placeholder cards for your own work anytime.</p>
+      <p class="section__note">Swipe or drag to browse. Swap the image and text on each card for your own work anytime.</p>
     </div>
-    <div class="projects__grid">
-      <article class="project-card">
-        <div class="project-card__top">
-          <span class="project-card__index">Site</span>
-        </div>
-        <h3>This Portfolio</h3>
-        <p>A personal site built to present my background, skills, and work — designed and built from scratch, hosted on Render.</p>
-        <div class="project-card__tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
-      </article>
-      <article class="project-card project-card--placeholder">
-        <div class="project-card__top">
-          <span class="project-card__index">Next</span>
-        </div>
-        <h3>Add your next project</h3>
-        <p>Replace this card with a real project — a short description, the tools used, and a link to view it live or on GitHub.</p>
-        <div class="project-card__tags"><span>Your stack</span></div>
-      </article>
-      <article class="project-card project-card--placeholder">
-        <div class="project-card__top">
-          <span class="project-card__index">Next</span>
-        </div>
-        <h3>Add another project</h3>
-        <p>Keep the strongest three to five pieces of work here — quality over quantity.</p>
-        <div class="project-card__tags"><span>Your stack</span></div>
-      </article>
+
+    <div class="projects__scroll" id="projectsScroll">
+      <div class="projects__track">
+
+        <article class="project-card">
+          <div class="project-card__image">
+            <img src="project-1.jpg" alt="This Portfolio project" loading="lazy" onerror="this.parentElement.classList.add('img-missing')">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__index">Site</span>
+            <h3>This Portfolio</h3>
+            <p>A personal site built to present my background, skills, and work — designed and built from scratch, hosted on Render.</p>
+            <div class="project-card__tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+          </div>
+        </article>
+
+        <article class="project-card project-card--placeholder">
+          <div class="project-card__image">
+            <img src="project-2.jpg" alt="Add your next project" loading="lazy" onerror="this.parentElement.classList.add('img-missing')">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__index">Next</span>
+            <h3>Add your next project</h3>
+            <p>Replace this card with a real project — a short description, the tools used, and a link to view it live or on GitHub.</p>
+            <div class="project-card__tags"><span>Your stack</span></div>
+          </div>
+        </article>
+
+        <article class="project-card project-card--placeholder">
+          <div class="project-card__image">
+            <img src="project-3.jpg" alt="Add another project" loading="lazy" onerror="this.parentElement.classList.add('img-missing')">
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__index">Next</span>
+            <h3>Add another project</h3>
+            <p>Keep the strongest three to five pieces of work here — quality over quantity.</p>
+            <div class="project-card__tags"><span>Your stack</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="prevBtn" aria-label="Previous project">←</button>
+      <button class="carousel-btn" id="nextBtn" aria-label="Next project">→</button>
     </div>
   </section>
 
